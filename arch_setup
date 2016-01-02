@@ -1,0 +1,75 @@
+diskdev=/dev/sda
+username=arch
+password=123456
+
+read -p "enter device file (default '$diskdev'): " a
+if [ x$a != x ]; then
+    diskdev=$a
+fi
+read -p "enter new username (default '$username'): " b
+if [ x$b != x ]; then
+    username=$b
+fi
+read -p "enter new password (default '$password'): " -s c
+if [ x$c != x ]; then
+	echo ""
+	read -p "retype new password:" -s d
+	if [ x$c != x$d ]; then
+		echo ""
+    	echo "passwords do not match, bye."
+		exit
+	fi
+	password=$c
+fi
+echo ""
+
+# download config
+wget https://raw.githubusercontent.com/bpskong/archsetup/master/arch_config
+sed -i "s#username=arch#username=$username#g" ./arch_config
+sed -i "s#diskdev=/dev/sda#diskdev=$diskdev#g" ./arch_config
+chmod +x ./arch_config
+
+# pacman source
+sed -i '1i\Server = http://mirrors.163.com/archlinux/\$repo/os/$arch' /etc/pacman.d/mirrorlist
+pacman -Sy
+
+# partition & format
+echo '
+n
+p
+1
+
+
+w' | fdisk $diskdev
+echo y | mkfs.ext4 "$diskdev"1
+
+# mount
+umount -R /mnt
+mount /dev/sda1 /mnt
+
+# setup base
+pacstrap /mnt base base-devel
+pacstrap /mnt grub-bios
+
+# common config
+genfstab -p /mnt >> /mnt/etc/fstab
+cp ./arch_config /mnt/arch_config
+arch-chroot /mnt /arch_config
+rm /mnt/arch_config
+
+# personal config
+if [ -f ./arch_personal ] ; then
+	cp ./arch_personal /mnt/arch_personal
+	arch-chroot /mnt /arch_personal
+	rm /mnt/arch_personal
+fi
+
+# permission
+echo "chown -R $username /home/$username" | arch-chroot /mnt
+echo "echo root:$password | chpasswd" | arch-chroot /mnt
+echo "echo $username:$password | chpasswd" | arch-chroot /mnt
+
+# umount
+umount -R /mnt
+
+reboot

@@ -1,0 +1,75 @@
+# be careful
+diskdev=/dev/sda
+username=arch
+
+# hostname & character coding
+echo "archlinux" >> /etc/hostname
+chmod u+w /etc/locale.gen
+sed -i 's/#en_US.UTF-8/en_US.UTF-8/g' /etc/locale.gen
+sed -i 's/#zh_CN.GB18030/zh_CN.GB18030/g' /etc/locale.gen
+sed -i 's/#zh_CN.UTF-8/zh_CN.UTF-8/g' /etc/locale.gen
+echo "LANG=en_US.UTF-8" >> /etc/locale.conf
+locale-gen
+
+# git home
+pacman -S --noconfirm git
+git clone https://github.com/bpskong/archome.git /home/$username
+cd /home/$username
+git submodule update --init --recursive
+
+# user & sudo
+useradd -d /home/$username -g users -s /bin/bash $username
+pacman -S --noconfirm sudo
+chmod u+w /etc/sudoers
+echo "$username ALL=(ALL) ALL" >> /etc/sudoers
+
+# boot & kernel
+mkinitcpio -p linux
+grub-install $diskdev
+grub-mkconfig -o /boot/grub/grub.cfg
+
+# datetime
+ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+timedatectl set-ntp true
+pacman -S --noconfirm openntpd
+systemctl enable openntpd.service
+
+# network
+pacman -S --noconfirm net-tools
+systemctl enable dhcpcd.service
+
+# desktop
+pacman -S --noconfirm xorg-server xorg-xinit xfce4 xfce4-goodies alsa-utils slim
+pacman -S --noconfirm open-vm-tools xf86-video-vmware xf86-input-vmmouse gtkmm
+systemctl enable slim.service
+
+# font
+pacman -S --noconfirm wqy-zenhei
+
+# input method
+pacman -S --noconfirm fcitx-im fcitx-configtool fcitx-googlepinyin
+
+# common
+pacman -S --noconfirm vim
+pacman -S --noconfirm openssh
+pacman -S --noconfirm smbclient gvfs-smb
+pacman -S --noconfirm chromium
+pacman -S --noconfirm mlocate
+pacman -S --noconfirm go
+pacman -S --noconfirm nodejs
+pacman -S --noconfirm wget
+pacman -S --noconfirm meld
+pacman -S --noconfirm unrar
+pacman -S --noconfirm p7zip
+pacman -S --noconfirm file-roller
+
+# yaourt
+echo "[archlinuxcn]" >> /etc/pacman.conf
+echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf
+echo "Server = http://repo.archlinuxcn.org/\$arch" >> /etc/pacman.conf
+pacman -Sy
+pacman -S --noconfirm yaourt
+pacman -S --noconfirm archlinuxcn-keyring
+yaourt -S chromium-pepper-flash
+
+exit
