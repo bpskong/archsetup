@@ -70,6 +70,6 @@ echo "Server = http://repo.archlinuxcn.org/\$arch" >> /etc/pacman.conf
 pacman -Sy
 pacman -S --noconfirm yaourt
 pacman -S --noconfirm archlinuxcn-keyring
-yaourt -S chromium-pepper-flash
+yaourt -S --noconfirm chromium-pepper-flash
 
 exit
