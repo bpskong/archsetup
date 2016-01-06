@@ -24,7 +24,7 @@ fi
 echo ""
 
 # download config
-wget https://raw.githubusercontent.com/bpskong/archsetup/master/arch_config
+curl -k -o arch_config https://raw.githubusercontent.com/bpskong/archsetup/master/arch_config
 sed -i "s#username=arch#username=$username#g" ./arch_config
 sed -i "s#diskdev=/dev/sda#diskdev=$diskdev#g" ./arch_config
 chmod +x ./arch_config
