@@ -43,6 +43,9 @@ pacman -S --noconfirm xorg-server xorg-xinit xfce4 xfce4-goodies alsa-utils slim
 pacman -S --noconfirm open-vm-tools xf86-video-vmware xf86-input-vmmouse gtkmm
 systemctl enable slim.service
 
+# theme
+ln -s /home/$username/cfg/themes/axiomd /usr/share/themes/axiomd
+
 # font
 pacman -S --noconfirm wqy-zenhei
 
