@@ -60,11 +60,20 @@ pacman -S --noconfirm chromium
 pacman -S --noconfirm mlocate
 pacman -S --noconfirm go
 pacman -S --noconfirm nodejs
+pacman -S --noconfirm npm
 pacman -S --noconfirm wget
 pacman -S --noconfirm meld
 pacman -S --noconfirm unrar
 pacman -S --noconfirm p7zip
 pacman -S --noconfirm file-roller
+pacman -S --noconfirm xdg-user-dirs
+
+# go
+mkdir -p /home/$username/.go
+
+# node
+mkdir -p /home/$username/.node
+npm config set prefix /home/$username/.node
 
 # yaourt
 echo "[archlinuxcn]" >> /etc/pacman.conf
