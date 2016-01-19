@@ -73,7 +73,8 @@ mkdir -p /home/$username/.go
 
 # node
 mkdir -p /home/$username/.node
-npm config set prefix /home/$username/.node
+echo "prefix=/home/$username/.node" >> /home/$username/.npmrc
+npm install -g commander
 
 # yaourt
 echo "[archlinuxcn]" >> /etc/pacman.conf
