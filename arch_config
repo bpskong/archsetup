@@ -16,14 +16,14 @@ pacman -S --noconfirm git
 git clone https://github.com/bpskong/archome.git /home/$username
 cd /home/$username
 git submodule update --init --recursive
-mkdir /home/$username/.userdirs/Desktop
-mkdir /home/$username/.userdirs/Documents
-mkdir /home/$username/.userdirs/Downloads
-mkdir /home/$username/.userdirs/Music
-mkdir /home/$username/.userdirs/Pictures
-mkdir /home/$username/.userdirs/Public
-mkdir /home/$username/.userdirs/Templates
-mkdir /home/$username/.userdirs/Videos
+mkdir -p /home/$username/.userdirs/Desktop
+mkdir -p /home/$username/.userdirs/Documents
+mkdir -p /home/$username/.userdirs/Downloads
+mkdir -p /home/$username/.userdirs/Music
+mkdir -p /home/$username/.userdirs/Pictures
+mkdir -p /home/$username/.userdirs/Public
+mkdir -p /home/$username/.userdirs/Templates
+mkdir -p /home/$username/.userdirs/Videos
 
 # user & sudo
 useradd -d /home/$username -g users -s /bin/bash $username
