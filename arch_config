@@ -80,10 +80,11 @@ pacman -S --noconfirm xdg-user-dirs
 mkdir -p /home/$username/.go
 
 # node
-mkdir -p /home/$username/.node/lib
 echo "prefix=/home/$username/.node" >> /home/$username/.npmrc
+mkdir -p /home/$username/.node/lib
 cd /home/$username/.node/lib
 npm install commander
+npm cache clean
 
 # yaourt
 echo "[archlinuxcn]" >> /etc/pacman.conf
