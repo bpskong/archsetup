@@ -69,6 +69,9 @@ echo "chown -R $username /home/$username" | arch-chroot /mnt
 echo "echo root:$password | chpasswd" | arch-chroot /mnt
 echo "echo $username:$password | chpasswd" | arch-chroot /mnt
 
+# clear history
+echo "rm /root/.viminfo;rm /root/.bash_history" | arch-chroot /mnt
+
 # umount
 umount -R /mnt
 
