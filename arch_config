@@ -83,7 +83,7 @@ mkdir -p /home/$username/.go
 echo "prefix=/home/$username/.node" >> /home/$username/.npmrc
 mkdir -p /home/$username/.node/lib
 cd /home/$username/.node/lib
-npm install commander
+npm install minimist
 npm cache clean
 
 # yaourt
