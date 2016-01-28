@@ -75,6 +75,7 @@ pacman -S --noconfirm unrar
 pacman -S --noconfirm p7zip
 pacman -S --noconfirm file-roller
 pacman -S --noconfirm xdg-user-dirs
+pacman -S --noconfirm rsync
 
 # go
 mkdir -p /home/$username/.go
