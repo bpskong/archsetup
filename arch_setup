@@ -4,7 +4,7 @@ password=123456
 
 read -p "enter device file (default '$diskdev'): " a
 if [ x$a != x ]; then
-    diskdev=$a
+	diskdev=$a
 fi
 read -p "enter new username (default '$username'): " b
 if [ x$b != x ]; then
@@ -16,7 +16,7 @@ if [ x$c != x ]; then
 	read -p "retype new password:" -s d
 	if [ x$c != x$d ]; then
 		echo ""
-    	echo "passwords do not match, bye."
+		echo "passwords do not match, bye."
 		exit
 	fi
 	password=$c
